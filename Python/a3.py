@@ -1,17 +1,14 @@
-#7 attempts max
-
 import random 
 
 colors = ['purple', 'black', 'gold', 'silver', 'grey']
 word = random.choice(colors)
 
 ##keeping numbers and counts
-tries = 0+1
+tries = 0
 hits = 0
 hit_letter = []
 miss = 0
 letter = ''
-display = []
 
 hangman = ['''
   +---+
@@ -78,35 +75,37 @@ while True:
     letter in word:
         print ('\nHit!')
         hits += 1
-        tries =+ 1
+        tries += 1
         hit_letter.append(letter) ## * check this later
-    elif len(letter) == 1 and letter and \
-    letter.isalpha and letter not in word:
+    elif len(letter) == 1 and letter.isalpha() \
+    and letter not in word:
         print('Miss :(')
         miss += 1
         ## hangman time
         print(hangman[miss])
         tries += 1
-
     else: ## trying to no specify anything here
         print('ERROR! TRY AGAIN')
 
-    for letter in word:
-        if letter in hit_letter:
-            display += letter
-            print(letter, end='')
-        else:
+    display = ''
+    for w in word:
+        if w in hit_letter:
+            display += w
+            print(w, end='')
+        else: 
             display += '_'
-            print('_', end='_')
+            print('_', end=' ')
 
     print('\n')
 
     if display == word:
         win = True
-        print(f'Hooray! lol \n In {tries},' \
+        print(f'Hooray! lol \n You got it in {tries} tries, ' \
             f'{hits} hits and {miss} miss(es)')
+        break
 
-    elif tries >= 8:
+    elif miss >= 5:
         print('Game over, womp :(')
+        print(f'The color was {word}')
         break
     
